@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'about' => 'static_pages#about'
   get 'contact' => 'static_pages#contact'
 
+  get 'signup'  => 'users#new'
+
   resources :microposts
   resources :users
 end
