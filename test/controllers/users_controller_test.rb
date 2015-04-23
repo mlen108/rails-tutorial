@@ -2,8 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = User.new(name: "Maciek", email: "maciek@example.com",
-                    password: "foobar", password_confirmation: "foobar")
+    @user = users(:maciek)
   end
 
   test "should get index" do
