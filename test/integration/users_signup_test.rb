@@ -10,6 +10,9 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                password_confirmation: "bar" }
     end
     assert_template 'users/new'
+    assert_select 'div#error_explanation' do
+      assert_select 'li', 4
+    end
   end
 
   test "valid singup information" do
@@ -19,7 +22,8 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                             email: "maciek@example.com",
                                             password: "SageOne123",
                                             password_confirmation: "SageOne123" }
-      assert_template 'users/show'
     end
+    assert_template 'users/show'
+    assert_not flash.empty?
   end
 end
