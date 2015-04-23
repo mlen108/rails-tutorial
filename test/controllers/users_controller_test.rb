@@ -2,7 +2,8 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
+    @user = User.new(name: "Maciek", email: "maciek@example.com",
+                    password: "foobar", password_confirmation: "foobar")
   end
 
   test "should get index" do
@@ -18,30 +19,38 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { email: @user.email, name: @user.name }
+      post :create, user: { email: @user.email, name: @user.name,
+                            password: @user.password,
+                            password_confirmation: @user.password_confirmation }
     end
 
     assert_redirected_to user_path(assigns(:user))
   end
 
   test "should show user" do
-    get :show, id: @user
+    @user.save
+    get :show, id: @user.id
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @user
+    @user.save
+    get :edit, id: @user.id
     assert_response :success
   end
 
   test "should update user" do
-    patch :update, id: @user, user: { email: @user.email, name: @user.name }
-    assert_redirected_to user_path(assigns(:user))
+    @user.save
+    patch :update, id: @user.id, user: { email: @user.email, name: @user.name,
+                                      password: @user.password,
+                                      password_confirmation: @user.password_confirmation }
+    assert_redirected_to user_path(@user.id)
   end
 
   test "should destroy user" do
+    @user.save
     assert_difference('User.count', -1) do
-      delete :destroy, id: @user
+      delete :destroy, id: @user.id
     end
 
     assert_redirected_to users_path
