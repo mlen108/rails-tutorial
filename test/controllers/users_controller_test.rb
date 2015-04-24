@@ -17,10 +17,13 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
+    # because fixtures and uniqueness don't go together ;]
+    @user.email = 'yay' + @user.email
+
     assert_difference('User.count') do
       post :create, user: { email: @user.email, name: @user.name,
-                            password: @user.password,
-                            password_confirmation: @user.password_confirmation }
+                            password: @user.password_digest,
+                            password_confirmation: @user.password_digest }
     end
 
     assert_redirected_to user_path(assigns(:user))
@@ -41,8 +44,8 @@ class UsersControllerTest < ActionController::TestCase
   test "should update user" do
     @user.save
     patch :update, id: @user.id, user: { email: @user.email, name: @user.name,
-                                      password: @user.password,
-                                      password_confirmation: @user.password_confirmation }
+                                         password: @user.password_digest,
+                                         password_confirmation: @user.password_digest }
     assert_redirected_to user_path(@user.id)
   end
 
