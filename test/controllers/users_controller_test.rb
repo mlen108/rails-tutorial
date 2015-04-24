@@ -7,6 +7,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
+    log_in_as(@user)
     get :index
     assert_response :success
     assert_not_nil assigns(:users)
@@ -68,13 +69,13 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    @user.save
+    log_in_as(@user)
     get :edit, id: @user.id
     assert_response :success
   end
 
   test "should update user" do
-    @user.save
+    log_in_as(@user)
     patch :update, id: @user.id, user: { email: @user.email, name: @user.name,
                                          password: @user.password_digest,
                                          password_confirmation: @user.password_digest }
@@ -82,7 +83,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should destroy user" do
-    @user.save
+    log_in_as(@user)
     assert_difference('User.count', -1) do
       delete :destroy, id: @user.id
     end
