@@ -55,8 +55,8 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_difference('User.count') do
       post :create, user: { email: @user.email, name: @user.name,
-                            password: @user.password_digest,
-                            password_confirmation: @user.password_digest }
+                            password: 'foobar1',
+                            password_confirmation: 'foobar1' }
     end
 
     assert_redirected_to user_path(assigns(:user))
@@ -77,8 +77,8 @@ class UsersControllerTest < ActionController::TestCase
   test "should update user" do
     log_in_as(@user)
     patch :update, id: @user.id, user: { email: @user.email, name: @user.name,
-                                         password: @user.password_digest,
-                                         password_confirmation: @user.password_digest }
+                                         password: 'foobar1',
+                                         password_confirmation: 'foobar1' }
     assert_redirected_to user_path(@user.id)
   end
 
@@ -104,5 +104,14 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, id: @user
     end
     assert_redirected_to root_url
+  end
+
+  test "should not allow the admin attribute to be edited via the web" do
+    log_in_as(@other_user)
+    assert_not @other_user.admin?
+    patch :update, id: @other_user, user: { password: 'foobar1',
+                                            password_confirmation: 'foobar1',
+                                            admin: true}
+    assert_not @other_user.reload.admin?
   end
 end
