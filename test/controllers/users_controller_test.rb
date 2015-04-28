@@ -59,7 +59,7 @@ class UsersControllerTest < ActionController::TestCase
                             password_confirmation: 'foobar1' }
     end
 
-    assert_redirected_to user_path(assigns(:user))
+    assert_redirected_to root_url
   end
 
   test "should show user" do
