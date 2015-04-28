@@ -63,7 +63,6 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should show user" do
-    @user.save
     get :show, id: @user.id
     assert_response :success
   end
@@ -113,5 +112,25 @@ class UsersControllerTest < ActionController::TestCase
                                             password_confirmation: 'foobar1',
                                             admin: true}
     assert_not @other_user.reload.admin?
+  end
+
+  test "should list only users with activated status" do
+    log_in_as(@user)
+    get :index
+    assert_response :success
+
+    first_page_of_users = User.paginate(page: 1)
+    first_page_of_users.each do |user|
+      assert user.activated?
+    end
+  end
+
+  test "should allow to show only user with activated status" do
+    assert @user.activated?
+    @user.toggle!(:activated)
+    assert_not @user.activated?
+
+    get :show, id: @user.id
+    assert_redirected_to root_url
   end
 end
