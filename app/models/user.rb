@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   before_save { email.downcase! }
 
-  has_many :microposts
+  has_many :microposts, dependent: :destroy
   has_secure_password
 
   validates :name, presence: true, length: { maximum: 50 }
@@ -62,6 +62,10 @@ class User < ActiveRecord::Base
 
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  def feed
+    Micropost.where("user_id = ?", id)
   end
 
   private
