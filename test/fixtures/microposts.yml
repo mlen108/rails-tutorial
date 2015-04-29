@@ -28,7 +28,7 @@ micropost_<%= n %>:
 ants:
   content: "Oh, is that what you want? Because that's how you get ants!"
   created_at: <%= 2.years.ago %>
-  user: maciek
+  user: phil
 
 zone:
   content: "Danger zone!"
@@ -38,9 +38,9 @@ zone:
 tone:
   content: "I'm sorry. Your words made sense, but your sarcastic tone did not."
   created_at: <%= 10.minutes.ago %>
-  user: phil
+  user: user_1
 
 van:
   content: "Dude, this van's, like, rolling probable cause."
   created_at: <%= 4.hours.ago %>
-  user: phil
+  user: user_1

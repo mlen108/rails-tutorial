@@ -1,0 +1,15 @@
+one:
+  follower: maciek
+  followed: user_1
+
+two:
+  follower: maciek
+  followed: user_2
+
+three:
+  follower: user_1
+  followed: maciek
+
+four:
+  follower: phil
+  followed: maciek
