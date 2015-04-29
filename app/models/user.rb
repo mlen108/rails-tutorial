@@ -55,7 +55,9 @@ class User < ActiveRecord::Base
   end
 
   def send_activation_email
-    UserMailer.account_activation(self).deliver_now
+    if Rails.env.development?
+      UserMailer.account_activation(self).deliver_now
+    end
   end
 
   def create_reset_digest
