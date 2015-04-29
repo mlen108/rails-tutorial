@@ -17,7 +17,7 @@ phil:
 user_<%= n %>:
   name:  <%= "User #{n}" %>
   email: <%= "user-#{n}@example.com" %>
-  password_digest: <%= User.digest('password') %>
+  password_digest: <%= User.digest('my_password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
 <% end %>
